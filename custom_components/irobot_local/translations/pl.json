@@ -1,0 +1,146 @@
+{
+  "config": {
+    "flow_title": "{name}",
+    "step": {
+      "user": {
+        "title": "Dodaj Roombę",
+        "description": "Skąd pobrać BLID i hasło robota? Robot zawsze jest sterowany lokalnie; zapisywane jest tylko hasło robota.",
+        "menu_options": {
+          "local": "Z robota (lokalnie, zalecane)",
+          "cloud": "Z konta iRobot (chmura)",
+          "manual": "Wpisz BLID i hasło ręcznie"
+        }
+      },
+      "local": {
+        "title": "Pobierz hasło z robota",
+        "description": "1. Postaw robota na stacji, włączonego.\n2. Zamknij aplikację iRobot.\n3. Przytrzymaj przycisk HOME przez ok. 2 sekundy, aż robot zagra dźwięki i zaświeci pierścień.\n4. W ciągu 30 sekund kliknij Zatwierdź.",
+        "data": {
+          "host": "Adres IP"
+        }
+      },
+      "local_failed": {
+        "title": "Nie udało się pobrać hasła lokalnie",
+        "description": "Robot nie odpowiedział albo nie był w trybie parowania. Niektóre modele i firmware (np. j7) w ogóle tego nie obsługują. Spróbuj ponownie albo pobierz hasło z chmury iRobot.",
+        "menu_options": {
+          "local": "Spróbuj ponownie",
+          "cloud": "Użyj konta iRobot (chmura)",
+          "manual": "Wpisz BLID i hasło ręcznie"
+        }
+      },
+      "cloud": {
+        "title": "Konto iRobot",
+        "description": "Użyte jednorazowo do odczytu BLID i hasła robota. E-mail i hasło do konta iRobot nie są zapisywane. Konta zakładane przez logowanie Google/Apple nie mają hasła iRobot i nie zadziałają.",
+        "data": {
+          "email": "E-mail",
+          "password": "Hasło do konta iRobot",
+          "country": "Kod kraju (np. PL, US)",
+          "host": "Adres IP robota"
+        }
+      },
+      "pick_robot": {
+        "title": "Wybierz robota",
+        "data": {
+          "blid": "Robot"
+        }
+      },
+      "manual": {
+        "title": "Połącz z Roombą",
+        "description": "Najpierw zamknij aplikację iRobot: robot przyjmuje tylko jedno lokalne połączenie. Wpisz hasło robota (np. `:1:1234567890:...`, razem z dwukropkiem na początku), nie hasło do konta iRobot.",
+        "data": {
+          "host": "Adres IP",
+          "blid": "BLID",
+          "password": "Hasło robota"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Robot odrzucił hasło",
+        "description": "Robot nie przyjmuje już zapisanego hasła, zwykle po resecie fabrycznym. Wpisz nowe hasło robota (np. `:1:1234567890:...`). Możesz je pobrać, dodając robota ponownie metodą lokalną lub chmurową w drugim oknie konfiguracji.",
+        "data": {
+          "password": "Hasło robota"
+        }
+      },
+      "reconfigure": {
+        "title": "Zmień ustawienia Roomby",
+        "description": "Zmień adres IP lub hasło robota. Najpierw zamknij aplikację iRobot.",
+        "data": {
+          "host": "Adres IP",
+          "password": "Hasło robota"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Brak połączenia. Sprawdź IP, zaporę (TCP 8883) i czy aplikacja iRobot oraz inne integracje są zamknięte.",
+      "invalid_auth": "Robot odrzucił BLID lub hasło.",
+      "unknown": "Nieoczekiwany błąd, sprawdź logi.",
+      "invalid_cloud_auth": "Konto iRobot odrzuciło e-mail lub hasło.",
+      "cloud_error": "Brak połączenia z chmurą iRobot albo nieoczekiwana odpowiedź, sprawdź logi.",
+      "no_robots": "Na tym koncie iRobot nie ma robotów."
+    },
+    "abort": {
+      "already_configured": "Ten robot jest już skonfigurowany.",
+      "reauth_successful": "Hasło zaktualizowane.",
+      "reconfigure_successful": "Robot zaktualizowany.",
+      "not_irobot_device": "To nie jest urządzenie iRobot."
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "bin_full": {
+        "name": "Pojemnik pełny"
+      },
+      "bin_missing": {
+        "name": "Brak pojemnika"
+      }
+    },
+    "button": {
+      "empty_bin": {
+        "name": "Opróżnij pojemnik"
+      },
+      "mapping_run": {
+        "name": "Przejazd mapujący"
+      }
+    },
+    "sensor": {
+      "phase": {
+        "name": "Faza"
+      },
+      "error": {
+        "name": "Kod błędu"
+      },
+      "mission_duration": {
+        "name": "Czas misji"
+      },
+      "cleaned_area": {
+        "name": "Posprzątana powierzchnia"
+      },
+      "missions_total": {
+        "name": "Liczba misji"
+      },
+      "wifi_signal": {
+        "name": "Sygnał Wi-Fi"
+      }
+    },
+    "switch": {
+      "record_messages": {
+        "name": "Nagrywaj wiadomości MQTT"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Pokoje",
+        "description": "Id mapy i pokoi pochodzą z Smart Map robota. Uruchom raz sprzątanie wybranych pokoi w aplikacji iRobot, wtedy id wypełnią się tu same. Jeden pokój na linię: `5 = Kuchnia`, strefy jako `zid:3 = Pod stołem`. Potem przypisz pokoje do obszarów HA w ustawieniach encji odkurzacza i używaj `vacuum.clean_area`.\n\n{error}",
+        "data": {
+          "pmap_id": "Id mapy (pmap_id)",
+          "user_pmapv_id": "Wersja mapy (user_pmapv_id)",
+          "rooms": "Pokoje"
+        }
+      }
+    },
+    "error": {
+      "invalid_rooms": "Nieprawidłowa lista pokoi.",
+      "pmap_required": "Id mapy jest wymagane, gdy podano pokoje."
+    }
+  }
+}

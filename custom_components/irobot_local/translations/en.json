@@ -1,0 +1,146 @@
+{
+  "config": {
+    "flow_title": "{name}",
+    "step": {
+      "user": {
+        "title": "Add Roomba",
+        "description": "How do you want to get the robot's BLID and password? The robot is always controlled locally; only the robot password is stored.",
+        "menu_options": {
+          "local": "From the robot (local, recommended)",
+          "cloud": "From the iRobot account (cloud)",
+          "manual": "Enter BLID and password manually"
+        }
+      },
+      "local": {
+        "title": "Get password from the robot",
+        "description": "1. Place the robot on its Home Base, powered on.\n2. Close the iRobot app.\n3. Hold the HOME button for ~2 seconds until the robot beeps and the ring lights up.\n4. Within 30 seconds, press Submit.",
+        "data": {
+          "host": "IP address"
+        }
+      },
+      "local_failed": {
+        "title": "Could not get the password locally",
+        "description": "The robot did not answer or was not in pairing mode. Some models and firmware versions (e.g. j7) do not support it at all. You can retry or get the password from the iRobot cloud instead.",
+        "menu_options": {
+          "local": "Try again",
+          "cloud": "Use the iRobot account (cloud)",
+          "manual": "Enter BLID and password manually"
+        }
+      },
+      "cloud": {
+        "title": "iRobot account",
+        "description": "Used once to read the robot's BLID and password. Your iRobot account email and password are not stored. Accounts created with Google/Apple sign-in have no iRobot password and will not work.",
+        "data": {
+          "email": "Email",
+          "password": "iRobot account password",
+          "country": "Country code (e.g. PL, US)",
+          "host": "Robot IP address"
+        }
+      },
+      "pick_robot": {
+        "title": "Choose robot",
+        "data": {
+          "blid": "Robot"
+        }
+      },
+      "manual": {
+        "title": "Connect to Roomba",
+        "description": "Close the iRobot app first: the robot accepts only one local connection. Use the robot password (e.g. `:1:1234567890:...`, including the leading colon), not your iRobot account password.",
+        "data": {
+          "host": "IP address",
+          "blid": "BLID",
+          "password": "Robot password"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Robot password rejected",
+        "description": "The robot no longer accepts the stored password, usually after a factory reset. Enter the new robot password (e.g. `:1:1234567890:...`). You can get it by adding the robot again with the local or cloud method in a second setup window.",
+        "data": {
+          "password": "Robot password"
+        }
+      },
+      "reconfigure": {
+        "title": "Reconfigure Roomba",
+        "description": "Change the robot IP address or password. Close the iRobot app first.",
+        "data": {
+          "host": "IP address",
+          "password": "Robot password"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Cannot connect. Check the IP, firewall (TCP 8883) and that the iRobot app and other integrations are closed.",
+      "invalid_auth": "The robot rejected the BLID or password.",
+      "unknown": "Unexpected error, see the logs.",
+      "invalid_cloud_auth": "The iRobot account rejected the email or password.",
+      "cloud_error": "Cannot reach the iRobot cloud or it returned an unexpected answer, see the logs.",
+      "no_robots": "No robots found in this iRobot account."
+    },
+    "abort": {
+      "already_configured": "This robot is already configured.",
+      "reauth_successful": "Password updated.",
+      "reconfigure_successful": "Robot updated.",
+      "not_irobot_device": "Not an iRobot device."
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "bin_full": {
+        "name": "Bin full"
+      },
+      "bin_missing": {
+        "name": "Bin missing"
+      }
+    },
+    "button": {
+      "empty_bin": {
+        "name": "Empty bin"
+      },
+      "mapping_run": {
+        "name": "Mapping run"
+      }
+    },
+    "sensor": {
+      "phase": {
+        "name": "Phase"
+      },
+      "error": {
+        "name": "Error code"
+      },
+      "mission_duration": {
+        "name": "Mission duration"
+      },
+      "cleaned_area": {
+        "name": "Cleaned area"
+      },
+      "missions_total": {
+        "name": "Missions"
+      },
+      "wifi_signal": {
+        "name": "Wi-Fi signal"
+      }
+    },
+    "switch": {
+      "record_messages": {
+        "name": "Record MQTT messages"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Rooms",
+        "description": "Map and room ids come from the robot's Smart Map. Start a room clean once in the iRobot app; the ids are then prefilled here. One room per line: `5 = Kitchen`, zones as `zid:3 = Under the table`. Then assign rooms to Home Assistant areas in the vacuum entity settings and use `vacuum.clean_area`.\n\n{error}",
+        "data": {
+          "pmap_id": "Map id (pmap_id)",
+          "user_pmapv_id": "Map version (user_pmapv_id)",
+          "rooms": "Rooms"
+        }
+      }
+    },
+    "error": {
+      "invalid_rooms": "Invalid rooms list.",
+      "pmap_required": "Map id is required when rooms are set."
+    }
+  }
+}
